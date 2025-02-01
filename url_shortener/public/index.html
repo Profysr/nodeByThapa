@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Url Shortener App</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div>
+      <header>
+        <h1>Url Shortener</h1>
+      </header>
+      <main>
+        <form id="shortened_form">
+          <section>
+            <label for="url">Enter Url</label>
+            <input type="text" name="url" id="url" required />
+          </section>
+          <section>
+            <label for="shortUrl">Custom Short Url (Optional)</label>
+            <input type="text" name="shortUrl" id="shortUrl" />
+          </section>
+          <button type="submit">Shorten</button>
+        </form>
+      </main>
+      <footer>
+        <h1>Shortened URLs</h1>
+        <ul id="shortened_urls"></ul>
+      </footer>
+    </div>
+
+    <script>
+      const fetchLinksFromServer = async () => {
+        try {
+          const res = await fetch("/getLinks");
+          if (res.ok) {
+            const fetchedLinks = await res.json();
+
+            const linkList = document.querySelector("#shortened_urls");
+            linkList.innerHTML = "";
+
+            for (const [shortUrl, url] of Object.entries(fetchedLinks)) {
+              const li = document.createElement("li");
+              const truncUrl =
+                url.length >= 32 ? `${url.slice(0, 32)}...` : url;
+              li.innerHTML = `<a href="/${shortUrl}" target="_blank">${window.location.origin}/${shortUrl}</a> - ${truncUrl}`;
+              linkList.appendChild(li);
+            }
+          } else {
+            console.log("Response Error fetchLinksFromServer", res.status);
+          }
+        } catch (error) {
+          console.log("Error in fetchLinksFromServer", error.code);
+        }
+      };
+
+      document
+        .querySelector("#shortened_form")
+        .addEventListener("submit", async (ev) => {
+          ev.preventDefault();
+          const formData = new FormData(ev.target);
+          const url = formData.get("url");
+          const shortUrl = formData.get("shortUrl");
+
+          const res = await fetch("/shorten", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ url, shortUrl }),
+          });
+          if (res.ok) {
+            await fetchLinksFromServer();
+            console.log("Data Posted Successfully from Index");
+            ev.target.reset();
+          } else {
+            console.log("Unable to Post Data from Index", res.status);
+          }
+        });
+
+      fetchLinksFromServer();
+    </script>
+  </body>
+</html>

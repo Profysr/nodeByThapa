@@ -1,0 +1,24 @@
+{
+  "name": "nodebythapa",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Profysr/nodeByThapa.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/Profysr/nodeByThapa/issues"
+  },
+  "homepage": "https://github.com/Profysr/nodeByThapa#readme",
+  "description": "",
+  "dependencies": {
+    "chalk": "^5.4.1"
+  }
+}
