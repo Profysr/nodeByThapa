@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Url Shortener App</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div>
+      <header>
+        <h1>Url Shortener</h1>
+      </header>
+      <main>
+        <form id="shortened_form" action="/contact" method="POST">
+          <section>
+            <label for="url">Enter Url</label>
+            <input type="text" name="form[url]" id="url" required />
+          </section>
+          <section>
+            <label for="shortUrl">Custom Short Url (Optional)</label>
+            <input type="text" name="form[shortUrl]" id="shortUrl" />
+          </section>
+          <input type="submit" />
+        </form>
+      </main>
+    </div>
+  </body>
+</html>
